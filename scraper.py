@@ -6,7 +6,7 @@ import pandas as pd
 
 headers = {"User-Agent": "Mozilla/5.0"}
 BASE = "https://www.vlr.gg"
-CSV_FILE = "vlr_matches_raw.csv"   # nome único pro projeto (melhor que "1000")
+CSV_FILE = "vlr_matches_raw.csv" 
 
 
 def clean(text):
@@ -171,3 +171,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

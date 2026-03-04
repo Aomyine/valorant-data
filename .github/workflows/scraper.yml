@@ -1,0 +1,34 @@
+name: Valorant Scraper
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'   # roda toda segunda às 03h
+  workflow_dispatch:       # permite rodar manualmente
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar bibliotecas
+        run: |
+          pip install requests beautifulsoup4 pandas lxml
+
+      - name: Rodar scraper
+        run: python scraper.py
+
+      - name: Salvar CSV atualizado
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add vlr_matches_raw.csv
+          git commit -m "update dataset"
+          git push

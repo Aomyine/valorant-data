@@ -2,8 +2,8 @@ name: Valorant Scraper
 
 on:
   schedule:
-    - cron: '0 3 * * 1'   # roda toda segunda às 03h
-  workflow_dispatch:       # permite rodar manualmente
+    - cron: '0 3 * * 1'   # roda toda segunda às 03:00
+  workflow_dispatch:      # permite rodar manualmente
 
 jobs:
   run-scraper:
@@ -25,10 +25,16 @@ jobs:
       - name: Rodar scraper
         run: python scraper.py
 
-      - name: Salvar CSV atualizado
+      - name: Commit CSV atualizado
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
+
           git add vlr_matches_raw.csv
-          git commit -m "update dataset"
-          git push
+
+          if git diff --cached --quiet; then
+            echo "Nenhuma mudança no dataset"
+          else
+            git commit -m "update dataset"
+            git push
+          fi

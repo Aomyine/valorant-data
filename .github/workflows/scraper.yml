@@ -1,9 +1,12 @@
 name: Valorant Scraper
 
+permissions:
+  contents: write
+
 on:
   schedule:
-    - cron: '0 3 * * 1'   # roda toda segunda às 03:00
-  workflow_dispatch:      # permite rodar manualmente
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
 
 jobs:
   run-scraper:
